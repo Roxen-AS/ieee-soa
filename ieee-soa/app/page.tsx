@@ -1,104 +1,56 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
-import Ticker from "@/components/Ticker";
-import DomainCard from "@/components/DomainCard";
-import SectionHeader from "@/components/SectionHeader";
-import Footer from "@/components/Footer";
+import { Ticker, DomainCard, SectionHeader, Footer } from "@/components/UI";
 import { DOMAINS } from "@/lib/data";
 import { useReveal } from "@/hooks/useReveal";
 
 export default function HomePage() {
-  const [loaded, setLoaded] = useState(false);
-  const revealRef = useReveal();
-  const scanRef = useRef<HTMLDivElement>(null);
+  const [loaded,setLoaded]=useState(false);
+  const ref=useReveal();
+  const router=useRouter();
 
   return (
     <>
-      {!loaded && <Loader onDone={() => setLoaded(true)} />}
+      {!loaded && <Loader onDone={()=>setLoaded(true)} />}
+      <div ref={ref} style={{opacity:loaded?1:0,transition:"opacity 0.8s ease"}}>
+        <style>{`
+          @keyframes scanMove{0%{top:-1%;opacity:0}3%{opacity:.8}92%{opacity:.2}100%{top:101%;opacity:0}}
+          @keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(200,255,0,.5)}50%{box-shadow:0 0 0 6px rgba(200,255,0,0);opacity:.7}}
+          @keyframes gradFlow{to{background-position:-300% 0}}
+        `}</style>
 
-      <div ref={revealRef} style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.8s ease" }}>
-        {/* ── HERO ── */}
-        <section
-          style={{
-            minHeight: 630,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            padding: "0 40px 52px",
-            position: "relative",
-            overflow: "hidden",
-            borderBottom: "1px solid var(--ln)",
-          }}
-          className="corner-brackets"
-        >
-          {/* Animated scan line */}
-          <div
-            ref={scanRef}
-            style={{
-              position: "absolute", left: 0, right: 0, height: 1,
-              background: "linear-gradient(90deg,transparent,rgba(200,255,0,0.6),rgba(0,212,255,0.4),transparent)",
-              opacity: 0,
-              animation: "scanMove 10s ease-in-out infinite 4s",
-              pointerEvents: "none",
-            }}
-          />
-          <style>{`
-            @keyframes scanMove {
-              0%{top:-1%;opacity:0} 3%{opacity:0.8} 92%{opacity:0.2} 100%{top:101%;opacity:0}
-            }
-            @keyframes ldUp {
-              from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)}
-            }
-            @keyframes glowPulse {
-              0%,100%{box-shadow:0 0 6px var(--a1)} 50%{box-shadow:0 0 18px var(--a1)}
-            }
-          `}</style>
-
-          {/* Tag */}
-          <div className="reveal" style={{ display:"inline-flex", alignItems:"center", gap:10, fontFamily:"Space Mono,monospace", fontSize:9, color:"var(--a1)", letterSpacing:3, textTransform:"uppercase", marginBottom:24, position:"relative", zIndex:2 }}>
-            <span style={{ width:6, height:6, borderRadius:"50%", background:"var(--a1)", animation:"glowPulse 2s infinite", boxShadow:"0 0 0 0 rgba(200,255,0,0.4)", display:"inline-block" }} />
+        {/* HERO */}
+        <section className="corner-brackets" style={{minHeight:600,display:"flex",flexDirection:"column",justifyContent:"flex-end",padding:"0 clamp(20px,5vw,48px) 52px",position:"relative",overflow:"hidden",borderBottom:"1px solid var(--ln)"}}>
+          <div style={{position:"absolute",left:0,right:0,height:1,pointerEvents:"none",background:"linear-gradient(90deg,transparent,rgba(200,255,0,0.6),rgba(0,212,255,0.4),transparent)",opacity:0,animation:"scanMove 10s ease-in-out infinite 4s"}}/>
+          <div className="reveal" style={{display:"inline-flex",alignItems:"center",gap:8,fontFamily:"Space Mono,monospace",fontSize:9,color:"var(--a1)",letterSpacing:3,textTransform:"uppercase",marginBottom:20,position:"relative",zIndex:2,transition:"color .3s"}}>
+            <span style={{width:6,height:6,borderRadius:"50%",background:"var(--a1)",animation:"blink 2s infinite",display:"inline-block",transition:"background .3s"}}/>
             Siksha 'O' Anusandhan University — IEEE Region 10
           </div>
-
-          {/* Main title */}
-          <div style={{ fontFamily:"Oxanium,sans-serif", fontWeight:800, fontSize:"clamp(56px,11vw,144px)", lineHeight:0.85, letterSpacing:-3, position:"relative", zIndex:2 }}>
-            <span className="text-outline reveal delay-1" style={{ display:"block" }}>ADVANCING</span>
-            <span className="reveal delay-2" style={{ display:"block", color:"var(--ink)" }}>TECHNOLOGY</span>
-            <span className="grad-text reveal delay-3" style={{ display:"block" }}>FOR HUMANITY</span>
+          <div style={{fontFamily:"Oxanium,sans-serif",fontWeight:800,fontSize:"clamp(46px,10vw,142px)",lineHeight:.86,letterSpacing:-3,position:"relative",zIndex:2}}>
+            <span className="text-outline reveal delay-1" style={{display:"block"}}>ADVANCING</span>
+            <span className="reveal delay-2" style={{display:"block",color:"var(--ink)",transition:"color .3s"}}>TECHNOLOGY</span>
+            <span className="reveal delay-3" style={{display:"block",background:"linear-gradient(90deg,var(--a1),var(--a3),var(--a4),var(--a1))",backgroundSize:"300% 100%",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",animation:"gradFlow 5s linear infinite"}}>FOR HUMANITY</span>
           </div>
-
-          {/* Footer row */}
-          <div className="reveal delay-4" style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", marginTop:36, gap:40, position:"relative", zIndex:2 }}>
-            <p style={{ maxWidth:380, fontSize:14, color:"var(--ink2)", lineHeight:1.75, fontWeight:300, borderLeft:"2px solid var(--a1)", paddingLeft:16 }}>
-              IEEE SOA Student Branch — a community of engineers and innovators advancing technology at every frontier.
+          <div className="reveal delay-4" style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginTop:32,gap:24,position:"relative",zIndex:2,flexWrap:"wrap"}}>
+            <p style={{maxWidth:400,fontSize:14,color:"var(--ink2)",lineHeight:1.75,fontWeight:300,borderLeft:"2px solid var(--a1)",paddingLeft:16,transition:"color .3s,border-color .3s"}}>
+              IEEE SOA Student Branch — a community of engineers and innovators advancing technology at every technical frontier.
             </p>
-            <div style={{ display:"flex", flexDirection:"column", gap:10, alignItems:"flex-end" }}>
-              <HeroButton href="/events" primary>Explore Events</HeroButton>
-              <HeroButton href="/about">About the Branch</HeroButton>
+            <div style={{display:"flex",flexDirection:"column",gap:10,alignItems:"flex-end"}}>
+              <HBtn primary onClick={()=>router.push("/events")}>Explore Events</HBtn>
+              <HBtn onClick={()=>router.push("/about")}>About the Branch</HBtn>
             </div>
           </div>
         </section>
 
-        {/* ── TICKER ── */}
         <Ticker />
 
-        {/* ── DOMAIN GRID ── */}
-        <section style={{ padding:"72px 40px" }}>
+        <section style={{padding:"clamp(40px,6vw,72px) clamp(20px,5vw,48px)"}}>
           <SectionHeader index="01" meta="06 Disciplines" title="Technical Scope" />
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", border:"1px solid var(--ln)" }}>
-            {DOMAINS.map((d, i) => (
-              <DomainCard
-                key={d.code}
-                code={d.code}
-                title={d.title}
-                body={d.body}
-                tip={d.tip}
-                noBorderRight={(i + 1) % 3 === 0}
-                noBorderBottom={i >= 3}
-                delay={Math.min((i % 3) + 1, 6)}
-              />
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(280px,100%),1fr))",gap:16}}>
+            {DOMAINS.map((d,i)=>(
+              <DomainCard key={d.code} code={d.code} title={d.title} body={d.body} tip={d.tip} delay={Math.min((i%3)+1,6)} />
             ))}
           </div>
         </section>
@@ -109,39 +61,18 @@ export default function HomePage() {
   );
 }
 
-function HeroButton({ href, primary, children }: { href: string; primary?: boolean; children: React.ReactNode }) {
-  const router = useRouter();
-  const [hovered, setHovered] = useState(false);
-
+function HBtn({primary,onClick,children}:{primary?:boolean;onClick?:()=>void;children:React.ReactNode}) {
+  const [hov,setHov]=useState(false);
   return (
-    <button
-      onClick={() => router.push(href)}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        fontFamily: "Space Mono,monospace",
-        fontSize: 9,
-        letterSpacing: 2,
-        textTransform: "uppercase",
-        padding: "13px 32px",
-        cursor: "pointer",
-        fontWeight: 700,
-        border: primary ? "none" : "1px solid var(--ln2)",
-        background: primary
-          ? hovered ? "var(--ink)" : "var(--a1)"
-          : "transparent",
-        color: primary
-          ? "var(--bg)"
-          : hovered ? "var(--a3)" : "var(--ink2)",
-        transform: hovered ? "translateY(-3px)" : "none",
-        boxShadow: primary && hovered ? "0 12px 32px rgba(200,255,0,0.25)" : "none",
-        borderColor: !primary && hovered ? "var(--a3)" : "var(--ln2)",
-        transition: "all 0.3s cubic-bezier(0.22,1,0.36,1)",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {children}
-    </button>
+    <button onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)} style={{
+      fontFamily:"Space Mono,monospace",fontSize:9,letterSpacing:2,textTransform:"uppercase",
+      padding:"12px 28px",cursor:"pointer",fontWeight:700,border:"none",
+      background:primary?(hov?"var(--ink)":"var(--a1)"):"transparent",
+      color:primary?"#0A0E1A":(hov?"var(--a3)":"var(--ink2)"),
+      ...((!primary)&&{border:`1px solid ${hov?"var(--a3)":"var(--ln2)"}`}),
+      transform:hov?"translateY(-2px)":"none",
+      boxShadow:primary&&hov?"0 10px 30px rgba(200,255,0,0.22)":"none",
+      transition:"all .3s cubic-bezier(.22,1,.36,1)",
+    }}>{children}</button>
   );
 }
