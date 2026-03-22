@@ -46,32 +46,35 @@ export default function AboutPage() {
                 // Identity
               </div>
 
-              {/* SB Logo — large, centered in panel, dark/light swap */}
-              <div style={{ display:"flex", justifyContent:"center", marginBottom:24 }}>
-                <Image
-                  src="/logos/sb_black.png"
-                  alt="IEEE SOA Student Branch"
-                  width={320} height={100}
-                  style={{ objectFit:"contain", width:"100%", maxWidth:300, height:"auto" }}
-                  className="logo-dark"
-                  priority
-                />
-                <Image
-                  src="/logos/sb_white.png"
-                  alt="IEEE SOA Student Branch"
-                  width={320} height={100}
-                  style={{ objectFit:"contain", width:"100%", maxWidth:300, height:"auto" }}
-                  className="logo-light"
-                  priority
-                />
-              </div>
+              {/* Logo LEFT — outline text RIGHT */}
+              <div style={{ display:"flex", alignItems:"center", gap:24, flexWrap:"wrap" }}>
 
-              {/* Outline text below logo */}
-              <div style={{ fontFamily:"Oxanium,sans-serif", fontWeight:800, fontSize:"clamp(28px,5vw,60px)", lineHeight:.9, letterSpacing:-2, textAlign:"center" }}>
-                <span ref={o1} style={{ color:"transparent", WebkitTextStroke:"1px rgba(242,240,255,0.09)" }}>SOA </span>
-                <span style={{ color:"transparent", WebkitTextStroke:"1px var(--a1)", transition:"-webkit-text-stroke .3s" }}>STUDENT</span>
-                <br />
-                <span ref={o2} style={{ color:"transparent", WebkitTextStroke:"1px rgba(242,240,255,0.09)" }}>BRANCH</span>
+                {/* Logo */}
+                <div style={{ flexShrink:0 }}>
+                  <Image
+                    src="/logos/sb_black.png"
+                    alt="IEEE SOA Student Branch"
+                    width={200} height={80}
+                    style={{ objectFit:"contain", width:180, height:"auto", display:"block" }}
+                    className="logo-dark"
+                    priority
+                  />
+                  <Image
+                    src="/logos/sb_white.png"
+                    alt="IEEE SOA Student Branch"
+                    width={200} height={80}
+                    style={{ objectFit:"contain", width:180, height:"auto", display:"block" }}
+                    className="logo-light"
+                    priority
+                  />
+                </div>
+
+                {/* Outline text */}
+                <div style={{ fontFamily:"Oxanium,sans-serif", fontWeight:800, fontSize:"clamp(24px,4vw,52px)", lineHeight:.9, letterSpacing:-2 }}>
+                  <span ref={o1} style={{ color:"transparent", WebkitTextStroke:"1px rgba(242,240,255,0.09)", display:"block" }}>SOA</span>
+                  <span style={{ color:"transparent", WebkitTextStroke:"1px var(--a1)", transition:"-webkit-text-stroke .3s", display:"block" }}>STUDENT</span>
+                  <span ref={o2} style={{ color:"transparent", WebkitTextStroke:"1px rgba(242,240,255,0.09)", display:"block" }}>BRANCH</span>
+                </div>
               </div>
             </div>
 
@@ -102,6 +105,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
       <div style={{ padding:"0 clamp(20px,5vw,48px)" }}>
         <div style={{ height:1, background:"var(--ln)", marginTop:48, transition:"background .3s" }}/>
       </div>
