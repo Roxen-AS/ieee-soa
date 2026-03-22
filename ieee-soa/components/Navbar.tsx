@@ -1,7 +1,7 @@
 "use client";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
 
 const LINKS = [
   { href:"/",        label:"Home"       },
@@ -23,13 +23,13 @@ export default function Navbar() {
     document.body.classList.toggle("light", !dark);
   },[dark]);
 
-  const pillLink = (active:boolean): React.CSSProperties => ({
+  const pillLink = (active:boolean) => ({
     padding:"8px 18px", borderRadius:100,
     fontFamily:"Oxanium,sans-serif", fontSize:13, fontWeight:700,
     color: active ? "#0A0E1A" : "rgba(255,255,255,0.52)",
     background: active ? "var(--a1)" : "transparent",
-    cursor:"pointer", border:"none", whiteSpace:"nowrap",
-    letterSpacing:.3, textDecoration:"none",
+    cursor:"pointer", border:"none", whiteSpace:"nowrap" as const,
+    letterSpacing:.3, textDecoration:"none" as const,
     transition:"color .2s, background .2s",
   });
 
@@ -45,7 +45,6 @@ export default function Navbar() {
         transition:"background .4s, border-color .4s",
       }}>
 
-        {/* Logo — transparent PNG works on both themes */}
         <Link href="/" style={{display:"flex",alignItems:"center",height:54,textDecoration:"none"}}>
           <img
             src="/logos/Logo.png"
@@ -56,7 +55,7 @@ export default function Navbar() {
 
         <div style={{display:"flex",alignItems:"center",gap:10}}>
 
-          {/* Theme toggle — icon only, no text */}
+          {/* Theme toggle — icon only */}
           <div
             onClick={()=>setDark(d=>!d)}
             style={{
@@ -82,7 +81,6 @@ export default function Navbar() {
                 boxShadow:"0 1px 4px rgba(0,0,0,.3)",
               }}/>
             </div>
-            {/* Icon only — no label */}
             <span style={{fontSize:14}}>{dark ? "☀️" : "🌙"}</span>
           </div>
 
@@ -116,14 +114,11 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* ── FLOATING PILL — directly below topbar, no gap ── */}
+      {/* ── FLOATING PILL ── */}
       <div className="nav-pill-desktop" style={{
         position:"sticky", top:58, zIndex:490,
         display:"flex", justifyContent:"center",
-        padding:"8px 20px",
-        pointerEvents:"none",
-        /* Dissolve the gap — pill sits flush below topbar */
-        marginTop:0,
+        padding:"8px 20px", pointerEvents:"none",
       }}>
         <div style={{
           display:"flex", alignItems:"center", gap:4,
