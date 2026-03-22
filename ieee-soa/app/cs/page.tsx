@@ -27,21 +27,21 @@ export default function CSPage() {
 
         <div style={{ display:"flex", gap:48, alignItems:"center", flexWrap:"wrap", justifyContent:"center" }}>
 
-          {/* CS Logo — sized to match the heading's visual weight */}
+          {/* CS Logo — larger */}
           <div className="reveal-left" style={{ flexShrink:0, display:"flex", alignItems:"center" }}>
             <Image
               src="/logos/cs_black.png"
               alt="IEEE Computer Society"
-              width={280} height={140}
-              style={{ objectFit:"contain", height:130, width:"auto" }}
+              width={380} height={180}
+              style={{ objectFit:"contain", height:180, width:"auto" }}
               className="logo-dark"
               priority
             />
             <Image
               src="/logos/cs_white.png"
               alt="IEEE Computer Society"
-              width={280} height={140}
-              style={{ objectFit:"contain", height:130, width:"auto" }}
+              width={380} height={180}
+              style={{ objectFit:"contain", height:180, width:"auto" }}
               className="logo-light"
               priority
             />
