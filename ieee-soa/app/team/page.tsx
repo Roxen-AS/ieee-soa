@@ -25,49 +25,50 @@ export default function TeamPage() {
         ))}
       </div>
 
-      {/* SB Team */}
-      <div style={{ display:tab==="sb"?"block":"none", padding:"clamp(24px,4vw,48px) clamp(16px,4vw,40px)" }}>
-        {/* Faculty row */}
-        <FacultyLabel />
-        <div className="team-grid" style={{ marginBottom:40 }}>
-          {SB_FACULTY.map(m => <TeamCard key={m.name} member={m} />)}
-        </div>
-        {/* Student members */}
-        <MemberLabel />
-        <div className="team-grid">
-          {SB_STUDENTS.map(m => <TeamCard key={m.name} member={m} />)}
-        </div>
-      </div>
+      {/* CONSTRAINED WRAPPER — max-width + auto margins give side breathing room */}
+      <div style={{ maxWidth:1000, margin:"0 auto", padding:"clamp(24px,4vw,48px) clamp(24px,4vw,48px)" }}>
 
-      {/* CS Team */}
-      <div style={{ display:tab==="cs"?"block":"none", padding:"clamp(24px,4vw,48px) clamp(16px,4vw,40px)" }}>
-        {/* Faculty row */}
-        <FacultyLabel />
-        <div className="team-grid" style={{ marginBottom:40 }}>
-          {CS_FACULTY.map(m => <TeamCard key={m.name} member={m} />)}
+        {/* SB Team */}
+        <div style={{ display:tab==="sb"?"block":"none" }}>
+          <FacultyLabel />
+          <div className="team-grid" style={{ marginBottom:48 }}>
+            {SB_FACULTY.map(m => <TeamCard key={m.name} member={m} />)}
+          </div>
+          <MemberLabel />
+          <div className="team-grid">
+            {SB_STUDENTS.map(m => <TeamCard key={m.name} member={m} />)}
+          </div>
         </div>
-        {/* Student members — 5 total, last 2 centered */}
-        <MemberLabel />
-        <div className="team-grid">
-          {CS_STUDENTS.slice(0,3).map(m => <TeamCard key={m.name} member={m} />)}
-        </div>
-        {/* Last 2 centered */}
-        <div style={{ display:"flex", justifyContent:"center", gap:20, marginTop:20, flexWrap:"wrap" }}>
-          {CS_STUDENTS.slice(3).map(m => (
-            <div key={m.name} style={{ width:"calc(33.333% - 14px)", minWidth:200 }}>
-              <TeamCard member={m} />
-            </div>
-          ))}
+
+        {/* CS Team */}
+        <div style={{ display:tab==="cs"?"block":"none" }}>
+          <FacultyLabel />
+          <div className="team-grid" style={{ marginBottom:48 }}>
+            {CS_FACULTY.map(m => <TeamCard key={m.name} member={m} />)}
+          </div>
+          <MemberLabel />
+          {/* First 3 */}
+          <div className="team-grid">
+            {CS_STUDENTS.slice(0,3).map(m => <TeamCard key={m.name} member={m} />)}
+          </div>
+          {/* Last 2 centered */}
+          <div style={{ display:"flex", justifyContent:"center", gap:20, marginTop:20, flexWrap:"wrap" }}>
+            {CS_STUDENTS.slice(3).map(m => (
+              <div key={m.name} style={{ width:"calc(33.333% - 14px)", minWidth:180 }}>
+                <TeamCard member={m} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       <Footer />
 
       <style>{`
-        .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-        @media(max-width:700px){ .team-grid{ grid-template-columns:1fr 1fr; gap:14px; } }
-        @media(max-width:440px){ .team-grid{ grid-template-columns:1fr; } }
-        @media(max-width:700px){ .cs-last-row > div { width:100% !important; min-width:unset !important; } }
+        .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+        @media(max-width:680px){ .team-grid{ grid-template-columns:1fr 1fr; gap:16px; } }
+        @media(max-width:420px){ .team-grid{ grid-template-columns:1fr; } }
+        @media(max-width:680px){ .cs-last > div { width:100% !important; min-width:unset !important; } }
       `}</style>
     </div>
   );
@@ -75,8 +76,8 @@ export default function TeamPage() {
 
 function FacultyLabel() {
   return (
-    <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:20 }}>
-      <span style={{ fontFamily:"Space Mono,monospace", fontSize:9, color:"var(--a1)", letterSpacing:3, textTransform:"uppercase", transition:"color .3s" }}>Faculty</span>
+    <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:24 }}>
+      <span style={{ fontFamily:"Space Mono,monospace", fontSize:9, color:"var(--a1)", letterSpacing:3, textTransform:"uppercase" }}>Faculty</span>
       <span style={{ flex:1, height:1, background:"var(--ln)" }}/>
     </div>
   );
@@ -84,8 +85,8 @@ function FacultyLabel() {
 
 function MemberLabel() {
   return (
-    <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:20 }}>
-      <span style={{ fontFamily:"Space Mono,monospace", fontSize:9, color:"var(--a3)", letterSpacing:3, textTransform:"uppercase", transition:"color .3s" }}>Members</span>
+    <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:24 }}>
+      <span style={{ fontFamily:"Space Mono,monospace", fontSize:9, color:"var(--a3)", letterSpacing:3, textTransform:"uppercase" }}>Members</span>
       <span style={{ flex:1, height:1, background:"var(--ln)" }}/>
     </div>
   );
@@ -103,7 +104,7 @@ function TeamCard({ member }: { member: TeamMember }) {
         background:"var(--card-bg)",
         border:`1px solid ${hov?"var(--a1)":"var(--card-border)"}`,
         borderRadius:14,
-        padding: member.isFaculty ? "20px 16px 18px" : "22px 18px 20px",
+        padding:"20px 18px 22px",
         textAlign:"center",
         transition:"border-color .3s,box-shadow .3s,transform .3s",
         cursor:"default", position:"relative", overflow:"hidden",
@@ -112,12 +113,12 @@ function TeamCard({ member }: { member: TeamMember }) {
         transform:hov?"translateY(-5px)":"none",
       }}
     >
-      {/* Top shimmer on hover */}
+      {/* Top shimmer */}
       <div style={{ position:"absolute", top:0, left:0, right:0, height:1, background:"linear-gradient(90deg,transparent,var(--a1),var(--a3),transparent)", transform:hov?"scaleX(1)":"scaleX(0)", transformOrigin:"left", transition:"transform .45s ease" }}/>
 
       {/* Faculty badge */}
       {member.isFaculty && (
-        <div style={{ position:"absolute", top:12, right:12, fontFamily:"Space Mono,monospace", fontSize:7, letterSpacing:1.5, textTransform:"uppercase", padding:"3px 8px", border:"1px solid rgba(200,255,0,0.3)", color:"var(--a1)", borderRadius:2, transition:"color .3s,border-color .3s" }}>
+        <div style={{ position:"absolute", top:12, right:12, fontFamily:"Space Mono,monospace", fontSize:7, letterSpacing:1.5, textTransform:"uppercase", padding:"3px 8px", border:"1px solid rgba(200,255,0,0.3)", color:"var(--a1)", borderRadius:2 }}>
           Faculty
         </div>
       )}
@@ -126,9 +127,8 @@ function TeamCard({ member }: { member: TeamMember }) {
       <div style={{
         width:"100%", aspectRatio:"1", borderRadius:10,
         background:"var(--s1)", border:`1px solid ${hov?"var(--a1)":"var(--ln2)"}`,
-        overflow:"hidden", marginBottom:14,
+        overflow:"hidden", marginBottom:18,
         transition:"border-color .3s,background .3s",
-        position:"relative",
       }}>
         {member.photo ? (
           <img
@@ -137,16 +137,29 @@ function TeamCard({ member }: { member: TeamMember }) {
           />
         ) : (
           <div style={{ width:"100%", height:"100%", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:6 }}>
-            <span style={{ fontFamily:"Oxanium,monospace", fontWeight:700, fontSize:28, color:member.accentColor??"var(--a1)" }}>{member.initials}</span>
+            <span style={{ fontFamily:"Oxanium,monospace", fontWeight:700, fontSize:32, color:member.accentColor??"var(--a1)" }}>{member.initials}</span>
             <span style={{ fontFamily:"Space Mono,monospace", fontSize:8, color:"var(--ink3)", letterSpacing:1, textTransform:"uppercase" }}>photo</span>
           </div>
         )}
       </div>
 
-      <div style={{ fontFamily:"Oxanium,sans-serif", fontWeight:600, fontSize:member.isFaculty?13:15, color:"var(--ink)", marginBottom:5, letterSpacing:.3, lineHeight:1.3, transition:"color .3s" }}>
+      {/* Name */}
+      <div style={{
+        fontFamily:"Oxanium,sans-serif", fontWeight:700,
+        fontSize: member.isFaculty ? 16 : 18,
+        color:"var(--ink)", marginBottom:8,
+        letterSpacing:.3, lineHeight:1.3, transition:"color .3s"
+      }}>
         {member.name}
       </div>
-      <div style={{ fontFamily:"Space Mono,monospace", fontSize:8, color:member.accentColor??"var(--a1)", letterSpacing:1.5, textTransform:"uppercase", transition:"color .3s" }}>
+
+      {/* Role */}
+      <div style={{
+        fontFamily:"Space Mono,monospace",
+        fontSize: 10,
+        color:member.accentColor??"var(--a1)",
+        letterSpacing:2, textTransform:"uppercase", transition:"color .3s"
+      }}>
         {member.role}
       </div>
     </div>
