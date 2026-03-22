@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import { SectionHeader, Footer } from "@/components/UI";
 import { FOCUS_AREAS, SITE } from "@/lib/data";
 import { useReveal } from "@/hooks/useReveal";
@@ -49,23 +48,19 @@ export default function AboutPage() {
               {/* Logo LEFT — outline text RIGHT */}
               <div style={{ display:"flex", alignItems:"center", gap:24, flexWrap:"wrap" }}>
 
-                {/* Logo */}
+                {/* Plain img tags — className targets .logo-dark/.logo-light in globals.css */}
                 <div style={{ flexShrink:0 }}>
-                  <Image
+                  <img
                     src="/logos/sb_black.png"
                     alt="IEEE SOA Student Branch"
-                    width={200} height={80}
-                    style={{ objectFit:"contain", width:180, height:"auto", display:"block" }}
                     className="logo-dark"
-                    priority
+                    style={{ width:180, height:"auto", display:"block", objectFit:"contain" }}
                   />
-                  <Image
+                  <img
                     src="/logos/sb_white.png"
                     alt="IEEE SOA Student Branch"
-                    width={200} height={80}
-                    style={{ objectFit:"contain", width:180, height:"auto", display:"block" }}
                     className="logo-light"
-                    priority
+                    style={{ width:180, height:"auto", display:"block", objectFit:"contain" }}
                   />
                 </div>
 
