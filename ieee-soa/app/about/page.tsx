@@ -8,12 +8,10 @@ export default function AboutPage() {
   const ref = useReveal();
   const o1 = useRef<HTMLSpanElement>(null);
   const o2 = useRef<HTMLSpanElement>(null);
-  const [isLight, setIsLight] = useState(false);
 
   useEffect(() => {
     const update = () => {
       const light = document.body.classList.contains("light");
-      setIsLight(light);
       const s = light ? "1px rgba(10,14,26,0.15)" : "1px rgba(242,240,255,0.09)";
       if (o1.current) o1.current.style.WebkitTextStroke = s;
       if (o2.current) o2.current.style.WebkitTextStroke = s;
@@ -50,12 +48,12 @@ export default function AboutPage() {
               {/* Logo LEFT — outline text RIGHT */}
               <div style={{ display:"flex", alignItems:"center", gap:24, flexWrap:"wrap" }}>
 
-                {/* Single img — src swapped via React state, no CSS class needed */}
+                {/* Transparent logo — works on both dark and light */}
                 <div style={{ flexShrink:0 }}>
                   <img
-                    src={isLight ? "/logos/sb_white.png" : "/logos/sb_black.png"}
+                    src="/logos/Logo_11.png"
                     alt="IEEE SOA Student Branch"
-                    style={{ width:180, height:"auto", display:"block", objectFit:"contain" }}
+                    style={{ width:200, height:"auto", display:"block", objectFit:"contain" }}
                   />
                 </div>
 
